@@ -10,7 +10,6 @@ import static jm.task.core.jdbc.util.Util.getInstance;
 
 public class UserDaoJDBCImpl implements UserDao {
     public UserDaoJDBCImpl() {
-
     }
     public void createUsersTable() {
         String sql = """
