@@ -1,15 +1,7 @@
 package jm.task.core.jdbc.util;
 
-import java.lang.reflect.Proxy;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-
 public class Util {
+<<<<<<< HEAD
     private static Util instance;
     public static synchronized Util getInstance() {
         if (instance == null) {
@@ -40,4 +32,7 @@ public class Util {
             throw new RuntimeException(e);
         }
     }
+=======
+    // реализуйте настройку соеденения с БД
+>>>>>>> master
 }

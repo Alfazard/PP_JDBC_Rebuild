@@ -1,5 +1,6 @@
 package jm.task.core.jdbc;
 
+<<<<<<< HEAD
 import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
 
@@ -18,5 +19,10 @@ public class Main {
         service.getAllUsers().forEach (System.out::println);
         service.cleanUsersTable();
         service.dropUsersTable();
+=======
+public class Main {
+    public static void main(String[] args) {
+        // реализуйте алгоритм здесь
+>>>>>>> master
     }
 }
