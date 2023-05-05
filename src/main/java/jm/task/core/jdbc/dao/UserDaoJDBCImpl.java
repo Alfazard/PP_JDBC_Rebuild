@@ -7,10 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jm.task.core.jdbc.util.Util.getInstance;
+
 public class UserDaoJDBCImpl implements UserDao {
     public UserDaoJDBCImpl() {
     }
-
     public void createUsersTable() {
         String sql = """
                 CREATE TABLE IF NOT EXISTS users
@@ -21,7 +22,7 @@ public class UserDaoJDBCImpl implements UserDao {
                     age      TINYINT     NOT NULL
                 );
                 """;
-        try (var connection = Util.getConnect();
+        try (var connection = getInstance().openConnection();
              var prepareStatement = connection.prepareStatement(sql)) {
             prepareStatement.execute();
         } catch (SQLException e) {
@@ -33,7 +34,7 @@ public class UserDaoJDBCImpl implements UserDao {
         String sql = """
                 DROP TABLE IF EXISTS users;
                 """;
-        try (var connection = Util.getConnect();
+        try (var connection = getInstance().openConnection();
              var prepareStatement = connection.prepareStatement(sql)) {
             prepareStatement.execute();
         } catch (SQLException e) {
@@ -46,7 +47,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 INSERT INTO users (name, lastName, age)
                 VALUES (?, ?, ?)
                 """;
-        try (var connection = Util.getConnect();
+        try (var connection = getInstance().openConnection();
              var prepareStatement = connection.prepareStatement(sql)) {
             prepareStatement.setString(1, name);
             prepareStatement.setString(2, lastName);
@@ -64,7 +65,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 FROM users
                 WHERE id = ?;
                 """;
-        try (var connection = Util.getConnect();
+        try (var connection = getInstance().openConnection();
              var prepareStatement = connection.prepareStatement(sql)) {
             prepareStatement.setLong(1, id);
             prepareStatement.executeUpdate();
@@ -82,7 +83,7 @@ public class UserDaoJDBCImpl implements UserDao {
                        age
                 FROM users;
                 """;
-        try (var connection = Util.getConnect();
+        try (var connection = getInstance().openConnection();
              var prepareStatement = connection.prepareStatement(sql)) {
             var resultSet = prepareStatement.executeQuery();
             while (resultSet.next()) {
@@ -104,7 +105,7 @@ public class UserDaoJDBCImpl implements UserDao {
         String sql = """
                 TRUNCATE users;
                 """;
-        try (var connection = Util.getConnect();
+        try (var connection = getInstance().openConnection();
              var prepareStatement = connection.prepareStatement(sql)) {
             prepareStatement.execute();
         } catch (SQLException e) {
