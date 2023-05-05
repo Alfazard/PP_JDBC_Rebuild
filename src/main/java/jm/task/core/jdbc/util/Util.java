@@ -1,7 +1,10 @@
 package jm.task.core.jdbc.util;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class Util {
-<<<<<<< HEAD
     private static Util instance;
     public static synchronized Util getInstance() {
         if (instance == null) {
@@ -32,7 +35,4 @@ public class Util {
             throw new RuntimeException(e);
         }
     }
-=======
-    // реализуйте настройку соеденения с БД
->>>>>>> master
 }

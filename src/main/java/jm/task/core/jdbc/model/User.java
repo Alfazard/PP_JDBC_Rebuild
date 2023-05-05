@@ -60,7 +60,6 @@ public class User {
     public void setAge(Byte age) {
         this.age = age;
     }
-<<<<<<< HEAD
 
     @Override
     public String toString() {
@@ -84,6 +83,5 @@ public class User {
     public int hashCode() {
         return Objects.hash(id, name, lastName, age);
     }
-=======
->>>>>>> master
+
 }

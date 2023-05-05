@@ -2,6 +2,8 @@ package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static jm.task.core.jdbc.util.Util.getInstance;
@@ -11,7 +13,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
     }
     public void createUsersTable() {
-<<<<<<< HEAD
         String sql = """
                 CREATE TABLE IF NOT EXISTS users
                 (
@@ -97,29 +98,10 @@ public class UserDaoJDBCImpl implements UserDao {
             throw new RuntimeException(e);
         }
         return userList;
-=======
 
-    }
-
-    public void dropUsersTable() {
-
-    }
-
-    public void saveUser(String name, String lastName, byte age) {
-
-    }
-
-    public void removeUserById(long id) {
-
-    }
-
-    public List<User> getAllUsers() {
-        return null;
->>>>>>> master
     }
 
     public void cleanUsersTable() {
-<<<<<<< HEAD
         String sql = """
                 TRUNCATE users;
                 """;
@@ -129,8 +111,5 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-=======
-
->>>>>>> master
     }
 }

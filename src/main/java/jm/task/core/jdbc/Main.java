@@ -1,6 +1,5 @@
 package jm.task.core.jdbc;
 
-<<<<<<< HEAD
 import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
 
@@ -16,13 +15,8 @@ public class Main {
         service.saveUser("Name4", "LastName4", (byte) 38);
 
         service.removeUserById(1);
-        service.getAllUsers().forEach (System.out::println);
+        service.getAllUsers().forEach(System.out::println);
         service.cleanUsersTable();
         service.dropUsersTable();
-=======
-public class Main {
-    public static void main(String[] args) {
-        // реализуйте алгоритм здесь
->>>>>>> master
     }
 }
