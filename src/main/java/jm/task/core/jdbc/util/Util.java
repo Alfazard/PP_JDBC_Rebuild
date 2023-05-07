@@ -5,12 +5,19 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Util {
-    private static Util instance;
-    public static synchronized Util getInstance() {
-        if (instance == null) {
-            instance = new Util();
+    private static volatile Util instance;
+
+    public static Util getInstance() {
+        Util localInstance = instance;
+        if (localInstance == null) {
+            synchronized (Util.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new Util();
+                }
+            }
         }
-        return instance;
+        return localInstance;
     }
     private Util() {
     }
