@@ -3,14 +3,18 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    private final Util instance =Util.getInstance();
+    private final Util instance = Util.getInstance();
+
     public UserDaoJDBCImpl() {
     }
+
     public void createUsersTable() {
         String sql = """
                 CREATE TABLE IF NOT EXISTS users
@@ -21,11 +25,31 @@ public class UserDaoJDBCImpl implements UserDao {
                     age      TINYINT     NOT NULL
                 );
                 """;
-        try (var connection = instance.openConnection();
-             var prepareStatement = connection.prepareStatement(sql)) {
+        Connection connection = null;
+        PreparedStatement prepareStatement;
+        try {
+            connection = instance.openConnection();
+            prepareStatement = connection.prepareStatement(sql);
+            connection.setAutoCommit(false);
             prepareStatement.execute();
-        } catch (SQLException e) {
+            connection.commit();
+        } catch (Exception e) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
             throw new RuntimeException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -33,11 +57,31 @@ public class UserDaoJDBCImpl implements UserDao {
         String sql = """
                 DROP TABLE IF EXISTS users;
                 """;
-        try (var connection = instance.openConnection();
-             var prepareStatement = connection.prepareStatement(sql)) {
+        Connection connection = null;
+        PreparedStatement prepareStatement;
+        try {
+            connection = instance.openConnection();
+            prepareStatement = connection.prepareStatement(sql);
+            connection.setAutoCommit(false);
             prepareStatement.execute();
-        } catch (SQLException e) {
+            connection.commit();
+        } catch (Exception e) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
             throw new RuntimeException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -46,15 +90,35 @@ public class UserDaoJDBCImpl implements UserDao {
                 INSERT INTO users (name, lastName, age)
                 VALUES (?, ?, ?)
                 """;
-        try (var connection = instance.openConnection();
-             var prepareStatement = connection.prepareStatement(sql)) {
+        Connection connection = null;
+        PreparedStatement prepareStatement;
+        try {
+            connection = instance.openConnection();
+            prepareStatement = connection.prepareStatement(sql);
             prepareStatement.setString(1, name);
             prepareStatement.setString(2, lastName);
             prepareStatement.setByte(3, age);
+            connection.setAutoCommit(false);
             prepareStatement.executeUpdate();
+            connection.commit();
             System.out.printf("User с именем – %s добавлен в базу данных\n", name);
-        } catch (SQLException e) {
+        } catch (Exception e) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
             throw new RuntimeException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -64,12 +128,32 @@ public class UserDaoJDBCImpl implements UserDao {
                 FROM users
                 WHERE id = ?;
                 """;
-        try (var connection = instance.openConnection();
-             var prepareStatement = connection.prepareStatement(sql)) {
+        Connection connection = null;
+        PreparedStatement prepareStatement;
+        try {
+            connection = instance.openConnection();
+            prepareStatement = connection.prepareStatement(sql);
             prepareStatement.setLong(1, id);
+            connection.setAutoCommit(false);
             prepareStatement.executeUpdate();
-        } catch (SQLException e) {
+            connection.commit();
+        } catch (Exception e) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
             throw new RuntimeException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -82,8 +166,12 @@ public class UserDaoJDBCImpl implements UserDao {
                        age
                 FROM users;
                 """;
-        try (var connection = instance.openConnection();
-             var prepareStatement = connection.prepareStatement(sql)) {
+        Connection connection = null;
+        PreparedStatement prepareStatement;
+        try {
+            connection = instance.openConnection();
+            prepareStatement = connection.prepareStatement(sql);
+            connection.setAutoCommit(false);
             var resultSet = prepareStatement.executeQuery();
             while (resultSet.next()) {
                 User user = new User();
@@ -93,8 +181,24 @@ public class UserDaoJDBCImpl implements UserDao {
                 user.setAge(resultSet.getByte("age"));
                 userList.add(user);
             }
-        } catch (SQLException e) {
+            connection.commit();
+        } catch (Exception e) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
             throw new RuntimeException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return userList;
 
@@ -104,11 +208,31 @@ public class UserDaoJDBCImpl implements UserDao {
         String sql = """
                 TRUNCATE users;
                 """;
-        try (var connection = instance.openConnection();
-             var prepareStatement = connection.prepareStatement(sql)) {
+        Connection connection = null;
+        PreparedStatement prepareStatement;
+        try {
+            connection = instance.openConnection();
+            prepareStatement = connection.prepareStatement(sql);
+            connection.setAutoCommit(false);
             prepareStatement.execute();
-        } catch (SQLException e) {
+            connection.commit();
+        } catch (Exception e) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
             throw new RuntimeException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
